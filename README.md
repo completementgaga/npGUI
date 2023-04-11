@@ -67,7 +67,7 @@ These are:
 ## Further developments of the project
 This package could benefit from several enhancements, among other things:
  
- * add more specialized subclasses of ClickableImage,
+ * develop additional specialized subclasses of ClickableImage,
  * include keyboard interactions,
  * lighten its memory usage.
 
