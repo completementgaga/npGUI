@@ -1,0 +1,9 @@
+.py.method,
+.py.function,
+.py.class {
+    padding-top: 1em;
+}
+
+div.document {
+    width: 1100px;
+}
