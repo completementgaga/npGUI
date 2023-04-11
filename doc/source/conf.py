@@ -23,8 +23,9 @@ project = "npGUI"
 copyright = "2023, Gaël Cousin"
 author = "Gaël Cousin"
 
+version = "0.0.3"
 # The full version, including alpha/beta/rc tags
-release = "0.0.2"
+release = version
 
 
 # -- General configuration ---------------------------------------------------
