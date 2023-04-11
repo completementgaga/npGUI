@@ -426,22 +426,6 @@ files = [
 ]
 
 [[package]]
-name = "lazy-loader"
-version = "0.2"
-description = "lazy_loader"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "lazy_loader-0.2-py3-none-any.whl", hash = "sha256:c35875f815c340f823ce3271ed645045397213f961b40ad0c0d395c3f5218eeb"},
-    {file = "lazy_loader-0.2.tar.gz", hash = "sha256:0edc7a5175c400acb108f283749951fefdadedeb00adcec6e88b974a9254f18a"},
-]
-
-[package.extras]
-lint = ["pre-commit (>=3.1)"]
-test = ["pytest (>=7.2)", "pytest-cov (>=4.0)"]
-
-[[package]]
 name = "markupsafe"
 version = "2.1.2"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -819,54 +803,52 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "scikit-image"
-version = "0.20.0"
+version = "0.19.0"
 description = "Image processing in Python"
 category = "main"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.7"
 files = [
-    {file = "scikit_image-0.20.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:3cec8c5e8412ee19642a916648144186eb6b60c39fb6608ab478b4d1a4575e25"},
-    {file = "scikit_image-0.20.0-cp310-cp310-macosx_12_0_arm64.whl", hash = "sha256:0ab378822fadc93db7e917a266d489ea33df3b42edfef197caaebbabbc2e4ecc"},
-    {file = "scikit_image-0.20.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c6797e3ef5fc53897bde131cfc3ceba6ce247d89cfe194fc8d3aba7f5c12aaf6"},
-    {file = "scikit_image-0.20.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f667dcf01737248bc5bd0a99fad58475abeb6b6a8229aecee9fdb96cf988ae85"},
-    {file = "scikit_image-0.20.0-cp310-cp310-win_amd64.whl", hash = "sha256:79a400ffe35fc7f64d1d043f3d043e062015689ad5637c35cd5569edae87ae13"},
-    {file = "scikit_image-0.20.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:049d955869620453b9e0568c2da62c8fec47bf3714be48b5d46bbaebb91bdc1f"},
-    {file = "scikit_image-0.20.0-cp311-cp311-macosx_12_0_arm64.whl", hash = "sha256:a503ee85b444234ee88f34bf8674872dc37c6124ff60b7eb9242813de012ff4e"},
-    {file = "scikit_image-0.20.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3943d7355d02b40c066fd87cd5fe1b4f6637a16448e62333c4191a65ebf40a1c"},
-    {file = "scikit_image-0.20.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8d719242ea7e7250d49e38d1e33c44c2dd59c3414ae085881d168b98cbb6059a"},
-    {file = "scikit_image-0.20.0-cp311-cp311-win_amd64.whl", hash = "sha256:fdd1fd258e78c86e382fd687177431088a40880bd785e0ab40ee5f3794366710"},
-    {file = "scikit_image-0.20.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:1cd0486cb769d906307a3ec3884630be822d8ec2f41069e197336f904f584a33"},
-    {file = "scikit_image-0.20.0-cp38-cp38-macosx_12_0_arm64.whl", hash = "sha256:2e9026161d0a698f532352dda6455a0bc13b1c9d831ea9279726b59d064df574"},
-    {file = "scikit_image-0.20.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1c123e6b0677dc1697c04b5bf2efb7110bcca511b4bc6967a38fa395ae5edf44"},
-    {file = "scikit_image-0.20.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:76f2fd12b537daea806a078df9ea76f5cc5a529d5bd7c41d7d0a101e9c5f91c4"},
-    {file = "scikit_image-0.20.0-cp38-cp38-win_amd64.whl", hash = "sha256:2118d610096754bca44b5d37328e1382e5fa7c6493803685100c9238e257d848"},
-    {file = "scikit_image-0.20.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:13a5c1c81ee5bcb64ee8ca8f1a2cf371b0c4345ea6fb67c3052e1c6d5edbd936"},
-    {file = "scikit_image-0.20.0-cp39-cp39-macosx_12_0_arm64.whl", hash = "sha256:1794889d2dbb385c7ad5656363371ba0057b7a3335cda093a11415af84bb96e2"},
-    {file = "scikit_image-0.20.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:df14f8a55dae511749b081d9402ea215ea7c641bd6f74f06aa7b623e132817df"},
-    {file = "scikit_image-0.20.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b856efc75e3051bea6d40a8ffcdaabd5682783ece1aa91c3f6777c3372a98ca1"},
-    {file = "scikit_image-0.20.0-cp39-cp39-win_amd64.whl", hash = "sha256:a600374394b76b7fc260cef54e1be21047c4de0ecffb0b7f2f7392cd8ba16ffa"},
-    {file = "scikit_image-0.20.0.tar.gz", hash = "sha256:2cd784fce18bd31d71ade62c6221440199ead03acf7544086261ee032264cf61"},
+    {file = "scikit-image-0.19.0.tar.gz", hash = "sha256:bcc79d06ca88ec081d1b0eacc0ae2ca3abbd993a5d89dc54fabe25f2480f0626"},
+    {file = "scikit_image-0.19.0-cp310-cp310-macosx_10_13_x86_64.whl", hash = "sha256:b28ae72a274f0805173379d36d76710c293eaae8eb78c2054ae8cf34f27f0440"},
+    {file = "scikit_image-0.19.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:19fd99aa1f255d4f054e3c6b72b121d913ec7f557732f760653a28bf3144bd98"},
+    {file = "scikit_image-0.19.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:562eba8e620166c5ca6a89049e5115aca00aa2aa733914d9de336c7a0e056cff"},
+    {file = "scikit_image-0.19.0-cp310-cp310-win_amd64.whl", hash = "sha256:ee63192e0ef8476de7e8cd8f06c47c322df39cfbcbe6377eb420427b1f1154ec"},
+    {file = "scikit_image-0.19.0-cp37-cp37m-macosx_10_13_x86_64.whl", hash = "sha256:89ebcad96043aa5f4fd69e8c8f51d7592be82904f3cfe04739b56b986f1a2640"},
+    {file = "scikit_image-0.19.0-cp37-cp37m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:cd960bdfa6345522d101c18eac52e42351804fa7e685c707c90eeaf15753bae7"},
+    {file = "scikit_image-0.19.0-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:a5103ba505b33199c6d8fce1917ac0c471db205257b5acd8bba61d8c43042daf"},
+    {file = "scikit_image-0.19.0-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:cb2e509482b89e91adb9dae314431d38d617e39e3539774f226f2bf161dc5543"},
+    {file = "scikit_image-0.19.0-cp37-cp37m-win32.whl", hash = "sha256:79dd6ad58051e1ee4e69b8d9dcab6e13383c941408640b2f94e28efad3c81e5d"},
+    {file = "scikit_image-0.19.0-cp37-cp37m-win_amd64.whl", hash = "sha256:75ad424927fc5ae0c50a466303c068cd8df7fa052387a219a37a9b6ed694f5ab"},
+    {file = "scikit_image-0.19.0-cp38-cp38-macosx_10_13_x86_64.whl", hash = "sha256:fb7b4482839e99d74f3727a3ae1e3271e5a8e70aa080dd8225ada4748dd49f43"},
+    {file = "scikit_image-0.19.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d278c5c5eaa2ac84f37ba481a2a51e3b76abbe727c8396cf4d980b85f4e3656b"},
+    {file = "scikit_image-0.19.0-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:1a658168403a3f6c7fc83e3526bf8003a8be0164ffc3bb7612a730d175313927"},
+    {file = "scikit_image-0.19.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:18354e7b60e81586dd1c31c84ead6eb8b3e03ab8ce8a5da4480da554e31d933b"},
+    {file = "scikit_image-0.19.0-cp38-cp38-win32.whl", hash = "sha256:279f79f8336b6c0d6277676939a0b23691521e8ab0569a9ec1672a01d2815c42"},
+    {file = "scikit_image-0.19.0-cp38-cp38-win_amd64.whl", hash = "sha256:613d2b7c8ba815fad65f0bdcfd1657b29d86ad325bfa88c4ad3b7cee40dd4ffc"},
+    {file = "scikit_image-0.19.0-cp39-cp39-macosx_10_13_x86_64.whl", hash = "sha256:5f850d3bd13800027899991ea2ca5f339b22deb8a0c488d175fe33a66e41a65b"},
+    {file = "scikit_image-0.19.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ca997b556f7b159ce4f52e404553c837615be80b5aba82eaa92cdc6e0e70d201"},
+    {file = "scikit_image-0.19.0-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:6ffac4d2108ef5a885e344d175b6b33a7035501d510c275ee6797fbeab07fec7"},
+    {file = "scikit_image-0.19.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ab6a1c60e7212a0133cb0919a5091bd68a5b6ad9f695022cc2390df6e2cb5cbd"},
+    {file = "scikit_image-0.19.0-cp39-cp39-win32.whl", hash = "sha256:65649f478a9a30f3f3f8dcc5782c164f94ef9e345b5db891b7c53cce4d4ef668"},
+    {file = "scikit_image-0.19.0-cp39-cp39-win_amd64.whl", hash = "sha256:6593840a68047615a09407fe9261321063834460eac7e9a578cc166dfbde884a"},
 ]
 
 [package.dependencies]
 imageio = ">=2.4.1"
-lazy_loader = ">=0.1"
-networkx = ">=2.8"
-numpy = ">=1.21.1"
+networkx = ">=2.2"
+numpy = ">=1.17.0"
 packaging = ">=20.0"
-pillow = ">=9.0.1"
+pillow = ">=6.1.0,<7.1.0 || >7.1.0,<7.1.1 || >7.1.1,<8.3.0 || >8.3.0"
 PyWavelets = ">=1.1.1"
-scipy = {version = ">=1.8", markers = "python_version > \"3.9\""}
+scipy = ">=1.4.1"
 tifffile = ">=2019.7.26"
 
 [package.extras]
-build = ["Cython (>=0.29.24)", "build", "meson-python (>=0.13.0rc0)", "ninja", "numpy (>=1.21.1)", "packaging (>=20)", "pythran", "setuptools (>=67)", "wheel"]
 data = ["pooch (>=1.3.0)"]
-default = ["PyWavelets (>=1.1.1)", "imageio (>=2.4.1)", "lazy_loader (>=0.1)", "networkx (>=2.8)", "numpy (>=1.21.1)", "packaging (>=20.0)", "pillow (>=9.0.1)", "scipy (>=1.8)", "scipy (>=1.8,<1.9.2)", "tifffile (>=2019.7.26)"]
-developer = ["pre-commit", "rtoml"]
-docs = ["dask[array] (>=2022.9.2)", "ipywidgets", "kaleido", "matplotlib (>=3.6)", "myst-parser", "numpydoc (>=1.5)", "pandas (>=1.5)", "plotly (>=5.10)", "pooch (>=1.6)", "pytest-runner", "scikit-learn", "seaborn (>=0.11)", "sphinx (>=5.2)", "sphinx-copybutton", "sphinx-gallery (>=0.11)", "tifffile (>=2022.8.12)"]
-optional = ["SimpleITK", "astropy (>=3.1.2)", "cloudpickle (>=0.2.1)", "dask[array] (>=1.0.0,!=2.17.0)", "matplotlib (>=3.3)", "pooch (>=1.3.0)", "pyamg"]
-test = ["asv", "codecov", "matplotlib (>=3.3)", "pooch (>=1.3.0)", "pytest (>=5.2.0)", "pytest-cov (>=2.7.0)", "pytest-faulthandler", "pytest-localserver"]
+docs = ["cloudpickle (>=0.2.1)", "dask[array] (>=0.15.0,!=2.17.0)", "ipywidgets", "kaleido", "matplotlib (>=3.3)", "myst-parser", "numpydoc (>=1.0)", "pandas (>=0.23.0)", "plotly (>=4.14.0)", "pooch (>=1.3.0)", "pytest-runner", "scikit-learn", "seaborn (>=0.7.1)", "sphinx (>=1.8)", "sphinx-copybutton", "sphinx-gallery (>=0.10.1)", "tifffile (>=2020.5.30)"]
+optional = ["SimpleITK", "astropy (>=3.1.2)", "cloudpickle (>=0.2.1)", "dask[array] (>=1.0.0,!=2.17.0)", "matplotlib (>=3.0.3)", "pooch (>=1.3.0)", "pyamg", "qtpy"]
+test = ["asv", "codecov", "flake8", "matplotlib (>=3.0.3)", "pooch (>=1.3.0)", "pytest (>=5.2.0)", "pytest-cov (>=2.7.0)", "pytest-faulthandler", "pytest-localserver"]
 
 [[package]]
 name = "scipy"
@@ -1129,5 +1111,5 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.10"
-content-hash = "2856127698bf4740e7504f0a47f24bd482ba59ce4824cb385e6f7a257cb85bbb"
+python-versions = "^3.10.6"
+content-hash = "177cea7ca7e2beb446362b8c2924bdc21709f7eba99ba69e5f0d78d87f5171d2"

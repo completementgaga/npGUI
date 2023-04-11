@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "np_gui"
-version = "0.0.2"
+version = "0.0.3"
 description = "This package implements Graphical User Interfaces from a NumPy user perspective."
 authors = ["Gaël Cousin <gcousin333@gmail.com>"]
 license = "MIT"
@@ -9,11 +9,11 @@ packages = [{include = "np_gui"}]
 
 
 [tool.poetry.dependencies]
-python = "^3.10"
-typeguard = "^3.0.2"
-numpy = "^1.24.2"
-matplotlib = "^3.5.1"
-scikit-image = "^0.20.0"
+python = "^3.10.6"
+typeguard = "^3.0.0"
+numpy = "^1.21.0"
+matplotlib = "^3.0.0"
+scikit-image = "0.19.0"
 
 [tool.poetry.group.dev.dependencies]
 Sphinx = "^6.1.3"
