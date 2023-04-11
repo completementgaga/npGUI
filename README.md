@@ -54,7 +54,39 @@ Some demonstration scripts are provided on the [GitHub repository](https://githu
 
 These are:
 * ./demo/puzzles/puzzles.py 
+<figure style="padding-left:5em">
+<img src="./screenshots/puzzles_screenshot.png"  width="300em" title="puzzles.py preview">
+<figcaption> Preview of the puzzle.py demo.</figcaption>
+</figure>
+
 * ./demo/clock/clock.py
+<figure style="padding-left:5em">
+<img src="./screenshots/clock_screenshot.png"  width="300em" title="clock.py preview">
+<figcaption> Preview of the clock.py demo.</figcaption>
+</figure>
+
+## Further developments of the project
+This package could benefit from several enhancements, among other things:
+ 
+ * add more specialized subclasses of ClickableImage,
+ * include keyboard interactions,
+ * lighten its memory usage.
+
+Feel free to open the discussion through issues and pull requests on the [GitHub repository](https://github.com/completementgaga/npGUI).
+
+Feedbacks are also welcome by e-mail or by giving the project a star.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
