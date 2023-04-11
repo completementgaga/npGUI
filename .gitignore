@@ -1,7 +1,8 @@
 dist/
-*/__pycache__/
+np_gui/__pycache__/
 doc/build/latex/*
 !doc/build/latex/npgui.pdf
 
 doc/build/doctrees/
+
 
