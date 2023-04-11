@@ -54,16 +54,15 @@ Some demonstration scripts are provided on the [GitHub repository](https://githu
 
 These are:
 * ./demo/puzzles/puzzles.py 
-    <figure>
-    <img src="./screenshots/puzzles_screenshot.png"  width="300em" title="puzzles.py preview">
-    <figcaption> Preview of the puzzle.py demo.</figcaption>
-    </figure>
+    | Preview of the puzzles.py demo.|
+    |:-----------------------------:|
+    |<img src="./screenshots/puzzles_screenshot.png"  width="300em" title="clock.py preview">|
 
 * ./demo/clock/clock.py
-    <figure>
-    <img src="./screenshots/clock_screenshot.png"  width="300em" title="clock.py preview">
-    <figcaption> Preview of the clock.py demo.</figcaption>
-    </figure>
+
+    | Preview of the clock.py demo.|
+    |:-----------------------------:|
+    |<img src="./screenshots/clock_screenshot.png"  width="300em" title="clock.py preview">|
 
 ## Further developments of the project
 This package could benefit from several enhancements, among other things:
