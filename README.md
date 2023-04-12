@@ -41,7 +41,12 @@ This package can be installed with pip as follows.
 $ pip install np_gui
 ```
 
-To avoid [depency hell](https://en.wikipedia.org/wiki/Dependency_hell), you might consider installing this package in a virtual environment.
+
+To avoid [depency hell](https://en.wikipedia.org/wiki/Dependency_hell),
+you might consider installing this package in a virtual environment.
+
+Alternatively, you can check the pyproject.toml file to see if this package is
+compatible with your setup ; which is likely.
 
 ## Documentation
 
@@ -56,13 +61,13 @@ These are:
 * ./demo/puzzles/puzzles.py 
     | Preview of the puzzles.py demo.|
     |:-----------------------------:|
-    |<img src="./screenshots/puzzles_screenshot.png"  width="300em" title="clock.py preview">|
+    |<img src="https://github.com/completementgaga/npGUI/raw/master/screenshots/puzzles_screenshot.png"  width="300em" title="clock.py preview">|
 
 * ./demo/clock/clock.py
 
     | Preview of the clock.py demo.|
     |:-----------------------------:|
-    |<img src="./screenshots/clock_screenshot.png"  width="300em" title="clock.py preview">|
+    |<img src="https://github.com/completementgaga/npGUI/raw/master/screenshots/clock_screenshot.png"  width="300em" title="clock.py preview">|
 
 ## Further developments of the project
 This package could benefit from several enhancements, among other things:
