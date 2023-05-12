@@ -16,14 +16,17 @@ import sys
 sys.path.insert(0, os.path.abspath("../.."))
 sys.path.insert(0, os.path.abspath("../../np_gui"))
 
+import tomli
+
 
 # -- Project information -----------------------------------------------------
 
 project = "npGUI"
 copyright = "2023, Gaël Cousin"
 author = "Gaël Cousin"
-
-version = "0.0.4"
+with open("../../pyproject.toml", "rb") as f:
+    data = tomli.load(f)
+version = data['tool']['poetry']['version']
 # The full version, including alpha/beta/rc tags
 release = version
 
