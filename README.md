@@ -42,7 +42,7 @@ $ pip install np_gui
 ```
 
 
-To avoid [depency hell](https://en.wikipedia.org/wiki/Dependency_hell),
+To avoid [dependency hell](https://en.wikipedia.org/wiki/Dependency_hell),
 you might consider installing this package in a virtual environment.
 
 Alternatively, you can check the pyproject.toml file to see if this package is
@@ -51,7 +51,7 @@ compatible with your setup ; which is likely.
 ## Documentation
 
 A detailed documentation of this package is available in pdf and html
-format within the ./doc/ folder of [its GitHub repository](https://github.com/completementgaga/npGUI).
+format within the ./docs/ folder of [its GitHub repository](https://github.com/completementgaga/npGUI).
 
 ## Demo
 
@@ -78,7 +78,7 @@ This package could benefit from several enhancements, among other things:
 
 Feel free to open the discussion through issues and pull requests on the [GitHub repository](https://github.com/completementgaga/npGUI).
 
-Feedbacks are also welcome by e-mail or by giving the project a star.
+Feedback is also welcome by e-mail or by giving the project a star.
 
 
 
