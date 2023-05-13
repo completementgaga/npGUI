@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "np_gui"
-version = "0.0.4"
+version = "0.0.5"
 description = "This package implements Graphical User Interfaces from a NumPy user perspective."
 authors = ["Gaël Cousin <gcousin333@gmail.com>"]
 license = "MIT"

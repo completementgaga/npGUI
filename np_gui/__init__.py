@@ -40,3 +40,6 @@ class and some subclasses,
 
 
 """
+from . import colors
+from . import image_annotation
+from . import np_clickable_image

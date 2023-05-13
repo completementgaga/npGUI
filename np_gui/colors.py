@@ -3,7 +3,7 @@
 The colors module
 -----------------------
 
-Provide a few color conversion facilities.
+Provide a few color conversion, color picking facilities.
 
 The reference color format here is the one of a numpy array
 with shape (3,) and dtype np.uint8. Beware that this is not the same 
@@ -20,13 +20,12 @@ Otherwise, you could run in incompatibily issues.
 
 from typeguard import typechecked
 import numpy as np
-from matplotlib import colors
-
+from matplotlib import colors as mcolors
 
 
 # Below, the colors are supposed to be given as rgb triples.
-# or that matplotlib.colors can interprete them as colors,
-# that is, the colors.to_rgb function accepts them as input.
+# or that matplotlib.colors can interpret them as colors,
+# that is, the matplotlib.colors.to_rgb function accepts them as input.
 
 
 @typechecked
@@ -57,9 +56,9 @@ def color_to_rgb(
             the rgb color.
     """
     if isinstance(color, str):
-        color = colors.to_rgb(color)
+        color = mcolors.to_rgb(color)
     if isinstance(color, np.ndarray):
-        color=list(map(int,list(color)))
+        color = list(map(int, list(color)))
     if len(color) != 3:
         raise ValueError("Expecting a 3-channels color (rgb) or a string.")
     if isinstance(color[0], float):
@@ -73,7 +72,6 @@ def color_to_rgb(
                 "To specify your color by a triple of integers, "
                 + "they should belong to the closed interval [0,255]."
             )
-
 
 
 def binary2grayscale(image: np.ndarray) -> np.ndarray:
@@ -142,3 +140,67 @@ def to_rgb(image: np.ndarray) -> np.ndarray:
             "The expected dtype of the ndarray is either 'bool' or 'uint8'."
             + "The expected shape is either 2d or 3d with shape[2]==3."
         )
+
+
+# The function below could certainly be optimized to accelerate the loop
+def main_color(
+    image: np.ndarray, region: np.ndarray | None = None
+) -> np.ndarray:
+    """Return the most frequent color of image within region.
+
+    Args:
+        image (np.ndarray): The 2d image to be studied as 2d or 3d np.ndarray.
+        region (np.ndarray | None , optional): The region in which the frequency
+            should be calculated, as a boolean 2d image. Defaults to None.
+            if None is passed, the full image is considered.
+
+    Raises:
+        ValueError: "region has no front pixel!"
+
+    Returns:
+        np.ndarray: The most frequent color in image within region, as
+        an np.ndarray (most likely a 1,3 or 4 entries 1d array)
+    """
+    if image.ndim == 2:
+        image = image.reshape(image.shape + (1,))
+    if region is None:
+        region = np.ones(image.shape[:2], dtype="bool")
+    if not np.any(region):
+        raise ValueError("region has no front pixel!")
+    found_colors = []
+    color_counts = []
+    for p in zip(*np.where(region)):
+        current_color = list(image[p])
+        if current_color in found_colors:
+            current_index = found_colors.index(current_color)
+            color_counts[current_index] += 1
+        else:
+            found_colors.append(current_color)
+            color_counts.append(1)
+    max_count = max(color_counts)
+    main_index = color_counts.index(max_count)
+    main_color = found_colors[main_index]
+
+    if len(main_color) == 1:
+        return main_color[0]
+    else:
+        return np.array(main_color)
+
+
+def mono_block(shape: tuple[int, int], color) -> np.ndarray:
+    """Return rgb image of the given shape and color.
+
+    Args:
+        shape (tuple[int,int]): The 2d shape of the sought block
+
+        color: A color, as accepable by color_to_rgb
+
+
+    Returns:
+        np.ndarray: The sought monochrome image as an rgb np.ndarray.
+    """
+    color = color_to_rgb(color)
+    output = np.zeros(shape + (3,), dtype="uint8")
+    output[:, :] = color
+
+    return output

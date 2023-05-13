@@ -8,7 +8,6 @@ The np_clickable_image module
 """
 
 
-
 from __future__ import annotations
 
 import numpy as np
@@ -22,8 +21,6 @@ import inspect, warnings
 
 from . import image_annotation
 from . import colors
-
-
 
 
 class _CombinableFunc:
@@ -149,11 +146,6 @@ def _combinable_func(g):
 # print(f(a=7, u=12))  # 19
 # print(f(u=13))  # 15
 # print(f.defaults_dic)
-
-
-
-
-
 
 
 class ClickableImage:
@@ -468,6 +460,9 @@ class ClickableImage:
                 the underlying skimage.resize call. Defaults to False.
             preserve_range (bool, optional): argument to be passed in
                 the underlying skimage.resize call. Defaults to False.
+
+        Returns:
+            ClickableImage: The resized version of self.
         """
 
         def new_image_func(**kwargs):
@@ -487,6 +482,72 @@ class ClickableImage:
 
         return ClickableImage(
             new_image, new_shape, new_regions, self.callbacks, self.vars_dic
+        )
+
+    def center_in_shape(
+        self,
+        shape: tuple[int, int],
+        frame_color=None
+    )->ClickableImage:
+        """Return clickable of the given shape with self in the center.
+
+        Args:
+            shape (tuple[int, int]): the 2d shape in which self should be
+                centered
+
+            frame_color (_type_, optional): The color of the added pixels.
+            Defaults to None. If None is passed, the main color of
+                self.get_image() will be used. Otherwise, this argument
+                must be parsable by np_gui.colors.color_to_rgb.
+
+        Returns:
+            ClickableImage: A new clickable A with A.shape=shape,
+                self in the center and extra pixels color specified by 
+                frame_color.
+        """
+        if frame_color is None:
+            frame_color=colors.main_color(self.get_image())
+        else:
+            frame_color = colors.color_to_rgb(frame_color)
+        y_factor = shape[0] / self.shape[0]
+        x_factor = shape[1] / self.shape[1]
+        factor = round(min(y_factor, x_factor), 3) - 10 ** (-3)
+        if factor < 1:
+            warnings.warn(
+                "The passed shape is not bigger than self.shape, "
+                + "we will use a resized copy of self to fit the shape."
+            )
+            new_shape = (
+                int(self.shape[0] * factor),
+                int(self.shape[0] * factor),
+            )
+            resized = self.resize(new_shape)
+            return resized.center_in_shape(shape, frame_color=frame_color)
+        top_block_shape = ((shape[0] - self.shape[0]) // 2, shape[1])
+        bottom_block_shape = (
+            shape[0] - self.shape[0] - top_block_shape[0],
+            shape[1],
+        )
+        right_block_shape = (self.shape[0], (shape[1] - self.shape[1]) // 2)
+        left_block_shape = (
+            self.shape[0],
+            shape[1] - self.shape[1] - right_block_shape[1],
+        )
+        top, bottom, left, right = list(
+            map(
+                lambda block_shape: colors.mono_block(
+                    block_shape, frame_color
+                ),
+                [
+                    top_block_shape,
+                    bottom_block_shape,
+                    left_block_shape,
+                    right_block_shape,
+                ],
+            )
+        )
+        return ClickableImage.vstack(
+            [top, ClickableImage.hstack([left, self, right]), bottom]
         )
 
 
@@ -645,7 +706,6 @@ class SliceDisplayer(ClickableImage):
                 shape,
                 background_color=background_color,
             )
-            
 
         text_image = _CombinableFunc(text_image_, defaults_dic)
         regions = []
