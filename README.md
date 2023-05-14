@@ -50,8 +50,12 @@ compatible with your setup ; which is likely.
 
 ## Documentation
 
-A detailed documentation of this package is available in pdf and html
-format within the ./docs/ folder of [its GitHub repository](https://github.com/completementgaga/npGUI).
+A detailed documentation of this package is available on 
+[GitHub Pages](https://completementgaga.github.io/npGUI/) --- as a website.
+
+It is also available in pdf format
+[here](https://github.com/completementgaga/npGUI/blob/master/sphinx/build/latex/npgui.pdf).
+
 
 ## Demo
 

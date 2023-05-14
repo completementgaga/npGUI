@@ -1,0 +1,797 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Welcome to npGUI’s documentation! &#8212; npGUI 0.0.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="welcome-to-npgui-s-documentation">
+<h1>Welcome to npGUI’s documentation!<a class="headerlink" href="#welcome-to-npgui-s-documentation" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<span class="target" id="module-np_gui"></span><section id="the-np-gui-package">
+<h2>The np_gui package<a class="headerlink" href="#the-np-gui-package" title="Permalink to this heading">¶</a></h2>
+<p>This package implements Graphical User Interfaces from a NumPy user
+perspective: every image corresponds to an ndarray.</p>
+<p>The core class is ClickableImage whose instances’ attributes are:</p>
+<ul class="simple">
+<li><p>a dictionary of parameter values,</p></li>
+<li><p>a callable that returns an image of fixed shape,</p></li>
+<li><p>regions in that shape defined as boolean images of the same shape</p></li>
+<li><p>and their corresponding callbacks.</p></li>
+</ul>
+<p>When calling the use method of an instance,
+the dictionary is passed to the callable, that uses (some of) its values
+as arguments and outputs an image which is displayed in a window.</p>
+<p>Upon clicking on the distinguished regions, their callbacks are called
+and alter the parameter values. The image is then refreshed from this
+input.</p>
+<p>When closing the window, the use method returns the dictionary with
+its altered values; whence the interaction with the user.</p>
+<p>These objects can be stacked vertically and horizontally to compose more
+complex ones. A certain number of subclasses are proposed as basic
+building blocks. The stacked blocks may have parameter keywords in common,
+which allows for interactions between them.</p>
+<p>The code is organized in three submodules as follows.</p>
+<ul class="simple">
+<li><p><strong>np_clickable_images</strong> contains the definition of the ClickableImage class and some subclasses,</p></li>
+<li><p><strong>colors</strong> contains some color management facilities and</p></li>
+<li><p><strong>image_annotation</strong> regards putting text in an image.</p></li>
+</ul>
+</section>
+<span class="target" id="module-np_gui.np_clickable_image"></span><section id="the-np-clickable-image-module">
+<h2>The np_clickable_image module<a class="headerlink" href="#the-np-clickable-image-module" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p>This module implements ClickableImage and some subclasses.</p>
+</div></blockquote>
+</section>
+<p><strong>Classes:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image._CombinableFunc" title="np_gui.np_clickable_image._CombinableFunc"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_CombinableFunc</span></code></a></p></td>
+<td><p>A class of callables mimicking positional keywords functions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClickableImage</span></code></a></p></td>
+<td><p>A class for clickable images, made with matplotlib and numpy.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ImageToggles" title="np_gui.np_clickable_image.ImageToggles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageToggles</span></code></a></p></td>
+<td><p>A subclass of ClickableImage where regions of the image become toggles.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.SliceDisplayer" title="np_gui.np_clickable_image.SliceDisplayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SliceDisplayer</span></code></a></p></td>
+<td><p>This subclass is for clickable images that display a slice of text.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.Button" title="np_gui.np_clickable_image.Button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Button</span></code></a></p></td>
+<td><p>The subclass of ClickableImage made of basic rectangular buttons.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image._CombinableFunc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">np_gui.np_clickable_image.</span></span><span class="sig-name descname"><span class="pre">_CombinableFunc</span></span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#_CombinableFunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image._CombinableFunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class of callables mimicking positional keywords functions.</p>
+<p>A class of callables mimicking functions with only positional
+keyword arguments with better control on signature and default
+values. This class does not care about the specific order of the
+positional keyword arguments.</p>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image._CombinableFunc.defaults_dictionary" title="np_gui.np_clickable_image._CombinableFunc.defaults_dictionary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">defaults_dictionary</span></code></a>(f)</p></td>
+<td><p>Parse the keyword(-only) arguments default values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image._CombinableFunc.__init__" title="np_gui.np_clickable_image._CombinableFunc.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(func[, defaults_dic])</p></td>
+<td><p>Build the callable.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image._CombinableFunc.defaults_dictionary">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">defaults_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#_CombinableFunc.defaults_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image._CombinableFunc.defaults_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the keyword(-only) arguments default values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>f</strong> (<em>Callable</em><em>[</em><em>Any</em><em>,</em><em>Any</em><em>]</em>) – A function.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dictionary with keys given by the keyword arguments</dt><dd><p>and keyword-only arguments of f that maps these keys to
+the corresponding default values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image._CombinableFunc.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults_dic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#_CombinableFunc.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image._CombinableFunc.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the callable.</p>
+<blockquote>
+<div><p>Build the callable from a  keyword(-only) function and
+optionally a dictionary. The function can be defined with
+a signature ( **kwargs, *, …). In this case, the placeholder
+for a detailed specification of keyword
+arguments is the dictionary, see below. If the dictionary
+is not passed, the function’s signature must specify every
+admissible positional keyword argument. Functions using
+also keyword-only arguments can be passed but the
+keyword-only arguments with no default value will be
+ignored. If a dictionary is passed, the function’s signature
+is ignored.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>Callable</em>) – A function with solely keyword and
+keyword-only arguments;</p></li>
+<li><p><strong>dic</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary specifying all admissible
+positional keyword arguments TOGETHER WITH their
+default values. Defaults to None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">np_gui.np_clickable_image.</span></span><span class="sig-name descname"><span class="pre">ClickableImage</span></span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class for clickable images, made with matplotlib and numpy.</p>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage.__init__" title="np_gui.np_clickable_image.ClickableImage.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(image, shape, regions, callbacks, ...)</p></td>
+<td><p>Builder method</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage.use" title="np_gui.np_clickable_image.ClickableImage.use"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use</span></code></a>([return_vars])</p></td>
+<td><p>Use the clickable image to get some user input.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage.constant_to_clickable" title="np_gui.np_clickable_image.ClickableImage.constant_to_clickable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constant_to_clickable</span></code></a>(img)</p></td>
+<td><p>Convert np.ndarray image to ClickableImage.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage.hstack" title="np_gui.np_clickable_image.ClickableImage.hstack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hstack</span></code></a>(clickables)</p></td>
+<td><p>Stack horizontally the input ClickableImages or np.ndarray images.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage.vstack" title="np_gui.np_clickable_image.ClickableImage.vstack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vstack</span></code></a>(clickables)</p></td>
+<td><p>Stack vertically the input ClickableImages or np.ndarray images.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage.resize" title="np_gui.np_clickable_image.ClickableImage.resize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resize</span></code></a>(shape[, anti_aliasing, preserve_range])</p></td>
+<td><p>Resize self to input shape.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage.center_in_shape" title="np_gui.np_clickable_image.ClickableImage.center_in_shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">center_in_shape</span></code></a>(shape[, frame_color])</p></td>
+<td><p>Return clickable of the given shape with self in the center.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vars_dic</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builder method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>Callable</em><em>[</em><em>Any</em><em>, </em><em>np.ndarray</em><em>] </em><em>| </em><em>np.ndarray</em>) – A function that
+returns an image or a ‘constant’ image. If a function is
+passed, it must have only keyword and keyword-only arguments.
+The keyword-only arguments with no default value will be
+ignored.</p></li>
+<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>...</em><em>]</em>) – shape of the ndarray returned by
+image</p></li>
+<li><p><strong>regions</strong> (<em>list</em><em>[</em><em>np.ndarray</em><em>]</em>) – boolean arrays A with A.shape=shape[:2]</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em><em>[</em><em>Callable</em><em>[</em><em>dict</em><em>, </em><em>None</em><em>]</em><em>]</em>) – functions to be
+called when the regions are clicked
+(the ith callback belongs to the ith region)</p></li>
+<li><p><strong>vars_dic</strong> (<em>dict</em>) – some variable values stored in a dict. They
+are meant to define the behaviour of the image attributes
+of the current instance and possibly other ones, in view of
+interactions between instances (stacking).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – The number of regions does not equal the
+    number of callbacks.</p></li>
+<li><p><strong>ValueError</strong> – The regions’ shapes do not all equal shape[:2]</p></li>
+<li><p><strong>ValueError</strong> – The passed regions do not have
+    dtype(‘bool’) dtype.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage.use">
+<span class="sig-name descname"><span class="pre">use</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_vars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plot_options</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage.use"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage.use" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the clickable image to get some user input.</p>
+<p>For this method to work, all the keyword arguments for image
+must be contained in vars_dic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>return_vars</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – The keys of vars_dic we are interested in. Defaults to None.
+If None is received, all vars_dic will be returned after
+the interaction.</p></li>
+<li><p><strong>**plot_options</strong> – the optional arguments to be passed to
+imshow. Useful to affect the display.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The requested dictionary of variables values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage.constant_to_clickable">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">constant_to_clickable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage.constant_to_clickable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage.constant_to_clickable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert np.ndarray image to ClickableImage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>img</strong> (<em>np.ndarray</em>) – an image</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding “constant” ClickableImage.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage">ClickableImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage.hstack">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hstack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clickables</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage.hstack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage.hstack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack horizontally the input ClickableImages or np.ndarray images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>clickables</strong> (<em>list</em><em>[</em><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage"><em>ClickableImage</em></a><em>|</em><em>np.ndarray</em><em>]</em>) – list of
+ClickableImages or images, in the second case they are
+treated as ‘constant’ ClickableImages.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The clickables are not stackable as demanded, due
+    to shape issues.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The ClickableImage obtained by stacking</dt><dd><p>horizontally the input clickables/images, with possible
+interactions if they share keys of their
+image.defaults_dic | vars_dic</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage">ClickableImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage.vstack">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vstack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clickables</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage.vstack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage.vstack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack vertically the input ClickableImages or np.ndarray images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>clickables</strong> (<em>list</em><em>[</em><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage"><em>ClickableImage</em></a><em>|</em><em>np.ndarray</em><em>]</em>) – list of
+ClickableImages or images, in the second case they are treated
+as’constant’ ClickableImages.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The clickables are not stackable as demanded,
+    due to shape issues. Remember this could include a depth issue.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>The ClickableImage obtained by stacking</dt><dd><p>vertically the input clickables, with possible
+interactions if they share keys of their
+image.defaults_dic | vars_dic</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage">ClickableImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anti_aliasing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage.resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resize self to input shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>,</em><em>...</em><em>]</em>) – Desired shape for the output.</p></li>
+<li><p><strong>anti_aliasing</strong> (<em>bool</em><em>, </em><em>optional</em>) – argument to be passed in
+the underlying skimage.resize call. Defaults to False.</p></li>
+<li><p><strong>preserve_range</strong> (<em>bool</em><em>, </em><em>optional</em>) – argument to be passed in
+the underlying skimage.resize call. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resized version of self.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage">ClickableImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ClickableImage.center_in_shape">
+<span class="sig-name descname"><span class="pre">center_in_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ClickableImage.center_in_shape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ClickableImage.center_in_shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return clickable of the given shape with self in the center.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – the 2d shape in which self should be
+centered</p></li>
+<li><p><strong>frame_color</strong> (<em>_type_</em><em>, </em><em>optional</em>) – The color of the added pixels.</p></li>
+<li><p><strong>passed</strong> (<em>Defaults to None. If None is</em>) – self.get_image() will be used. Otherwise, this argument
+must be parsable by np_gui.colors.color_to_rgb.</p></li>
+<li><p><strong>of</strong> (<em>the main color</em>) – self.get_image() will be used. Otherwise, this argument
+must be parsable by np_gui.colors.color_to_rgb.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A new clickable A with A.shape=shape,</dt><dd><p>self in the center and extra pixels color specified by
+frame_color.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage">ClickableImage</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ImageToggles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">np_gui.np_clickable_image.</span></span><span class="sig-name descname"><span class="pre">ImageToggles</span></span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ImageToggles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ImageToggles" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass of ClickableImage where regions of the image become toggles.</p>
+<p>No new method, a unique original method: __init__ which ‘extends’ the
+superclass’s method.</p>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ImageToggles.__init__" title="np_gui.np_clickable_image.ImageToggles.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(image, regions, *[, daltonism, ...])</p></td>
+<td><p>Build self.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.ImageToggles.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regions</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">daltonism</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'green'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">off_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'red'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_toggle_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_is_black_pixel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toggles_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'toggles'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#ImageToggles.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.ImageToggles.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build self. Extend super().__init__, with distinct arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – The “background” image</p></li>
+<li><p><strong>regions</strong> (<em>list</em><em>[</em><em>np.ndarray</em><em>]</em>) – the ‘toggle’ regions as boolean images.</p></li>
+<li><p><strong>daltonism</strong> (<em>bool</em><em>, </em><em>optional</em>) – Option to set a special color mode for
+color blind people. Defaults to False.</p></li>
+<li><p><strong>on_color</strong> (<em>str</em><em>, </em><em>optional</em>) – The color of the regions when toggled to
+True. Defaults to “green”. This string must be recognized
+by matplotlib.colors.to_rgb.</p></li>
+<li><p><strong>off_color</strong> (<em>str</em><em>, </em><em>optional</em>) – The color of the regions when toggled to
+False. Defaults to “red”.  This string must be recognized
+by matplotlib.colors.to_rgb.</p></li>
+<li><p><strong>default_toggle_value</strong> (<em>bool</em><em>, </em><em>optional</em>) – The common value of all</p></li>
+<li><p><strong>True.</strong> (<em>toggles as defined in the Clickable image vars_dic. Defaults to</em>) – </p></li>
+<li><p><strong>true_is_black_pixel</strong> (<em>bool</em><em>, </em><em>optional</em>) – Decide if the front pixel
+are black, in case image is boolean. Defaults to True.</p></li>
+<li><p><strong>toggles_name</strong> (<em>str</em><em>, </em><em>optional</em>) – the key of the toggles values list in
+the ClickableImage’s vars_dic. Defaults to “toggles”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – “The input regions do not have ‘bool’ dtype.”)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.SliceDisplayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">np_gui.np_clickable_image.</span></span><span class="sig-name descname"><span class="pre">SliceDisplayer</span></span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#SliceDisplayer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.SliceDisplayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This subclass is for clickable images that display a slice of text.</p>
+<p>The slice may have variable start and stop.</p>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.SliceDisplayer.__init__" title="np_gui.np_clickable_image.SliceDisplayer.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(text, shape, *[, background_color, ...])</p></td>
+<td><p>Extends __init__ of superclass, with distinct arguments.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.SliceDisplayer.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slice_varname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'slice'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#SliceDisplayer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.SliceDisplayer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends __init__ of superclass, with distinct arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text whose slice will be displayed</p></li>
+<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – The shape of the resulting ClickableImage</p></li>
+<li><p><strong>background_color</strong> (<em>str</em><em>, </em><em>optional</em>) – Background color, this string
+must be recognized by matplotlib.colors.to_rgb.
+Defaults to “white”.</p></li>
+<li><p><strong>slice_varname</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the variable that
+defines the slice to take. Defaults to “slice”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.Button">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">np_gui.np_clickable_image.</span></span><span class="sig-name descname"><span class="pre">Button</span></span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#Button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.Button" title="Permalink to this definition">¶</a></dt>
+<dd><p>The subclass of ClickableImage made of basic rectangular buttons.</p>
+<p>More precisely, the unique clickable region is the whole image.</p>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.Button.__init__" title="np_gui.np_clickable_image.Button.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(image, callback)</p></td>
+<td><p>Button constructor.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.Button.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#Button.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.Button.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Button constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – The underlying image of the button.</p></li>
+<li><p><strong>callback</strong> (<em>Callable</em>) – The callback triggered by clicking the button.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-np_gui.colors"></span><section id="the-colors-module">
+<h2>The colors module<a class="headerlink" href="#the-colors-module" title="Permalink to this heading">¶</a></h2>
+<p>Provide a few color conversion, color picking facilities.</p>
+<p>The reference color format here is the one of a numpy array
+with shape (3,) and dtype np.uint8. Beware that this is not the same
+convention as in matplotlib.colors. In this package, interacting with
+this package, it is recommended to always prefer our colors.color_to_rgb
+to matplotlib.colors.to_rgb.</p>
+<p>Otherwise, you could run in incompatibily issues.</p>
+</section>
+<p><strong>Functions:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.colors.color_to_rgb" title="np_gui.colors.color_to_rgb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_to_rgb</span></code></a>(color)</p></td>
+<td><p>Convert matplotlib color to 8-bits rgb color.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.colors.binary2grayscale" title="np_gui.colors.binary2grayscale"><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary2grayscale</span></code></a>(image)</p></td>
+<td><p>Convert a binary image to rgb image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.colors.grayscale2rgb" title="np_gui.colors.grayscale2rgb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grayscale2rgb</span></code></a>(image)</p></td>
+<td><p>Convert a grayscale image to rgb image.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.colors.binary2rgb" title="np_gui.colors.binary2rgb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary2rgb</span></code></a>(image)</p></td>
+<td><p>Convert a binary image to rgb image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.colors.to_rgb" title="np_gui.colors.to_rgb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_rgb</span></code></a>(image)</p></td>
+<td><p>Convert image to the rgb format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.colors.main_color" title="np_gui.colors.main_color"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main_color</span></code></a>(image[, region])</p></td>
+<td><p>Return the most frequent color of image within region.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.colors.mono_block" title="np_gui.colors.mono_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mono_block</span></code></a>(shape, color)</p></td>
+<td><p>Return rgb image of the given shape and color.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.colors.color_to_rgb">
+<span class="sig-prename descclassname"><span class="pre">np_gui.colors.</span></span><span class="sig-name descname"><span class="pre">color_to_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/colors.html#color_to_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.colors.color_to_rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert matplotlib color to 8-bits rgb color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>color</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>] </em><em>| </em><em>list</em><em>[</em><em>int</em><em>] </em><em>|             </em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>, </em><em>float</em><em>] </em><em>|            </em><em>list</em><em>[</em><em>float</em><em>] </em><em>| </em><em>str</em><em> | </em><em>np.ndarray</em>) – an 8-bits rgb color or its float             rescaled version, with values in [0,1] or a string recognized             by matplotlib.to_rgb.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – “Expecting a 3-channels color (rgb) or a string.”</p></li>
+<li><p><strong>ValueError</strong> – “To specify your color by a triple of integers,
+    they should belong to the closed interval [0,255].”</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>an np.ndarray of shape (3,) and dtype ‘uint8’, representing</dt><dd><p>the rgb color.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.colors.binary2grayscale">
+<span class="sig-prename descclassname"><span class="pre">np_gui.colors.</span></span><span class="sig-name descname"><span class="pre">binary2grayscale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/colors.html#binary2grayscale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.colors.binary2grayscale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a binary image to rgb image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – A binary image as a 2d np.ndarray</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the corresponding grayscale image.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.colors.grayscale2rgb">
+<span class="sig-prename descclassname"><span class="pre">np_gui.colors.</span></span><span class="sig-name descname"><span class="pre">grayscale2rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/colors.html#grayscale2rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.colors.grayscale2rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a grayscale image to rgb image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – A grayscale image as a 2d np.ndarray with
+dtype ‘uint8’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the corresponding rgb image.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.colors.binary2rgb">
+<span class="sig-prename descclassname"><span class="pre">np_gui.colors.</span></span><span class="sig-name descname"><span class="pre">binary2rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/colors.html#binary2rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.colors.binary2rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a binary image to rgb image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – A binary image as a 2d np.ndarray</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the corresponding rgb image</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.colors.to_rgb">
+<span class="sig-prename descclassname"><span class="pre">np_gui.colors.</span></span><span class="sig-name descname"><span class="pre">to_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/colors.html#to_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.colors.to_rgb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert image to the rgb format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image</strong> (<em>np.ndarray</em>) – The image to be converted.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – The expected dtype of the ndarray is either ‘bool’
+    or ‘uint8’. The expected shape is either 2d or 3d with
+    shape[2]==3.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The image converted to the rgb format.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.colors.main_color">
+<span class="sig-prename descclassname"><span class="pre">np_gui.colors.</span></span><span class="sig-name descname"><span class="pre">main_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/colors.html#main_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.colors.main_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the most frequent color of image within region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – The 2d image to be studied as 2d or 3d np.ndarray.</p></li>
+<li><p><strong>region</strong> (<em>np.ndarray</em><em> | </em><em>None</em><em> , </em><em>optional</em>) – The region in which the frequency
+should be calculated, as a boolean 2d image. Defaults to None.
+if None is passed, the full image is considered.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – “region has no front pixel!”</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The most frequent color in image within region, as
+an np.ndarray (most likely a 1,3 or 4 entries 1d array)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.colors.mono_block">
+<span class="sig-prename descclassname"><span class="pre">np_gui.colors.</span></span><span class="sig-name descname"><span class="pre">mono_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/colors.html#mono_block"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.colors.mono_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return rgb image of the given shape and color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – The 2d shape of the sought block</p></li>
+<li><p><strong>color</strong> – A color, as accepable by color_to_rgb</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sought monochrome image as an rgb np.ndarray.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-np_gui.image_annotation"></span><section id="the-image-annotation-module">
+<h2>The image_annotation module<a class="headerlink" href="#the-image-annotation-module" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p>This module deals with displaying text on a Numpy image.</p>
+</div></blockquote>
+</section>
+<p><strong>Functions:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.image_annotation.string_to_image" title="np_gui.image_annotation.string_to_image"><code class="xref py py-obj docutils literal notranslate"><span class="pre">string_to_image</span></code></a>(s[, relative_line_spacing])</p></td>
+<td><p>Produce image of the given string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.image_annotation.center_text" title="np_gui.image_annotation.center_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">center_text</span></code></a>(text, shape[, color, ...])</p></td>
+<td><p>Center given text over a monochrome background to create a np.ndarray.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.image_annotation.string_to_image">
+<span class="sig-prename descclassname"><span class="pre">np_gui.image_annotation.</span></span><span class="sig-name descname"><span class="pre">string_to_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_line_spacing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/image_annotation.html#string_to_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.image_annotation.string_to_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce image of the given string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>str</em>) – The string that must appear on the image.</p></li>
+<li><p><strong>relative_line_spacing</strong> (<em>float</em><em>, </em><em>optional</em>) – The line spacing, relative
+to the height of ONE line. Defaults to 0.1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>boolean image displaying the input string. The text
+corresponding to null pixels.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="np_gui.image_annotation.center_text">
+<span class="sig-prename descclassname"><span class="pre">np_gui.image_annotation.</span></span><span class="sig-name descname"><span class="pre">center_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'white'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/image_annotation.html#center_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.image_annotation.center_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Center given text over a monochrome background to create a np.ndarray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text to print</p></li>
+<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – The shape of the background</p></li>
+<li><p><strong>color</strong> – The color of the background, of a type
+acceptable by colors.color_to_rgb. Defaults to black.</p></li>
+<li><p><strong>background_color</strong> – The color of the background, of a type
+acceptable by colors.color_to_rgb. Defaults to white.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The resulting image as an rgb np.ndarray of dtype ‘uint8’.</dt><dd><p>The text fills 90% of the width or of the height of the input shape,
+depending on its own proportions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Gaël Cousin.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
