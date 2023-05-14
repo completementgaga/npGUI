@@ -21,3 +21,4 @@ help:
 
 copy html to docs:
 	cp -r build/html/. ../docs/
+

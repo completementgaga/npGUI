@@ -3,6 +3,7 @@ np_gui/__pycache__/
 doc/build/doctrees/
 doc/build/latex/*
 !doc/build/latex/npgui.pdf
+.buildinfo
 
 
 
