@@ -1,2 +1,2 @@
-docs/
-sphinx/
+docs/** linguist-documentation
+sphinx/** linguist-documentation

@@ -1,8 +1,8 @@
 dist/
 np_gui/__pycache__/
-doc/build/doctrees/
-doc/build/latex/*
-!doc/build/latex/npgui.pdf
+sphinx/build/doctrees/
+sphinx/build/latex/*
+!sphinx/build/latex/npgui.pdf
 .buildinfo
 
 
