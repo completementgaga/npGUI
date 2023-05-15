@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Welcome to npGUI’s documentation! &#8212; npGUI 0.0.5 documentation</title>
+    <title>Welcome to npGUI’s documentation! &#8212; npGUI 0.1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
@@ -91,10 +91,13 @@ which allows for interactions between them.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.ImageToggles" title="np_gui.np_clickable_image.ImageToggles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageToggles</span></code></a></p></td>
 <td><p>A subclass of ClickableImage where regions of the image become toggles.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.SliceDisplayer" title="np_gui.np_clickable_image.SliceDisplayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SliceDisplayer</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.RadioButton" title="np_gui.np_clickable_image.RadioButton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RadioButton</span></code></a></p></td>
+<td><p>A subclass for radio buttons.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.SliceDisplayer" title="np_gui.np_clickable_image.SliceDisplayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SliceDisplayer</span></code></a></p></td>
 <td><p>This subclass is for clickable images that display a slice of text.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.Button" title="np_gui.np_clickable_image.Button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Button</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.Button" title="np_gui.np_clickable_image.Button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Button</span></code></a></p></td>
 <td><p>The subclass of ClickableImage made of basic rectangular buttons.</p></td>
 </tr>
 </tbody>
@@ -345,7 +348,7 @@ image.defaults_dic | vars_dic</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>,</em><em>...</em><em>]</em>) – Desired shape for the output.</p></li>
+<li><p><strong>shape</strong> (<em>tuple</em><em>[</em><em>int</em><em>,</em><em>int</em><em>]</em>) – Desired 2d shape for the output.</p></li>
 <li><p><strong>anti_aliasing</strong> (<em>bool</em><em>, </em><em>optional</em>) – argument to be passed in
 the underlying skimage.resize call. Defaults to False.</p></li>
 <li><p><strong>preserve_range</strong> (<em>bool</em><em>, </em><em>optional</em>) – argument to be passed in
@@ -353,7 +356,11 @@ the underlying skimage.resize call. Defaults to False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resized version of self.</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>The resized version of self, with the same</dt><dd><p>number of channels as self.</p>
+</dd>
+</dl>
+</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#np_gui.np_clickable_image.ClickableImage" title="np_gui.np_clickable_image.ClickableImage">ClickableImage</a></p>
@@ -434,6 +441,40 @@ the ClickableImage’s vars_dic. Defaults to “toggles”.</p></li>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>TypeError</strong> – “The input regions do not have ‘bool’ dtype.”)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.RadioButton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">np_gui.np_clickable_image.</span></span><span class="sig-name descname"><span class="pre">RadioButton</span></span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#RadioButton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.RadioButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass for radio buttons.</p>
+<p>It has a unique original method: the _init_ method extends the
+superclass’ one.</p>
+<p><strong>Methods:</strong></p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#np_gui.np_clickable_image.RadioButton.__init__" title="np_gui.np_clickable_image.RadioButton.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(radius[, toggle_name, checked])</p></td>
+<td><p>Instantiate RadioButton.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="np_gui.np_clickable_image.RadioButton.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toggle_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'radio_toggle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/np_gui/np_clickable_image.html#RadioButton.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#np_gui.np_clickable_image.RadioButton.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate RadioButton.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>int</em>) – radius of the external circle of the button.</p></li>
+<li><p><strong>toggle_name</strong> (<em>str</em><em>, </em><em>optional</em>) – vars_dic keyword for the button
+status (checked or not). Defaults to “radio_toggle”.</p></li>
+<li><p><strong>checked</strong> (<em>bool</em><em>, </em><em>optional</em>) – Initial state of the button.
+Defaults to False. If False, the button starts unchecked.
+Otherwise, it starts checked.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

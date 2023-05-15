@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>np_gui.np_clickable_image &#8212; npGUI 0.0.5 documentation</title>
+    <title>np_gui.np_clickable_image &#8212; npGUI 0.1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
@@ -481,21 +481,22 @@
 
 <div class="viewcode-block" id="ClickableImage.resize"><a class="viewcode-back" href="../../index.html#np_gui.np_clickable_image.ClickableImage.resize">[docs]</a>    <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+        <span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="n">anti_aliasing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">preserve_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClickableImage</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Resize self to input shape.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            shape (tuple[int,...]): Desired shape for the output.</span>
+<span class="sd">            shape (tuple[int,int]): Desired 2d shape for the output.</span>
 <span class="sd">            anti_aliasing (bool, optional): argument to be passed in</span>
 <span class="sd">                the underlying skimage.resize call. Defaults to False.</span>
 <span class="sd">            preserve_range (bool, optional): argument to be passed in</span>
 <span class="sd">                the underlying skimage.resize call. Defaults to False.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            ClickableImage: The resized version of self.</span>
+<span class="sd">            ClickableImage: The resized version of self, with the same </span>
+<span class="sd">                number of channels as self.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">new_image_func</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -507,7 +508,10 @@
             <span class="p">)</span>
 
         <span class="n">new_image</span> <span class="o">=</span> <span class="n">_CombinableFunc</span><span class="p">(</span><span class="n">new_image_func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">defaults_dic</span><span class="p">)</span>
-        <span class="n">new_shape</span> <span class="o">=</span> <span class="n">shape</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+            <span class="n">new_shape</span> <span class="o">=</span> <span class="n">shape</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_shape</span><span class="o">=</span><span class="n">shape</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
         <span class="n">new_regions</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">skimage</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
             <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">regions</span>
@@ -518,10 +522,8 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ClickableImage.center_in_shape"><a class="viewcode-back" href="../../index.html#np_gui.np_clickable_image.ClickableImage.center_in_shape">[docs]</a>    <span class="k">def</span> <span class="nf">center_in_shape</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
-        <span class="n">frame_color</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">)</span><span class="o">-&gt;</span><span class="n">ClickableImage</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">frame_color</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClickableImage</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return clickable of the given shape with self in the center.</span>
 
 <span class="sd">        Args:</span>
@@ -535,21 +537,22 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            ClickableImage: A new clickable A with A.shape=shape,</span>
-<span class="sd">                self in the center and extra pixels color specified by </span>
+<span class="sd">                self in the center and extra pixels color specified by</span>
 <span class="sd">                frame_color.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">frame_color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">frame_color</span><span class="o">=</span><span class="n">colors</span><span class="o">.</span><span class="n">main_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">())</span>
+            <span class="n">frame_color</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">main_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">frame_color</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">color_to_rgb</span><span class="p">(</span><span class="n">frame_color</span><span class="p">)</span>
         <span class="n">y_factor</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">x_factor</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">factor</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">y_factor</span><span class="p">,</span> <span class="n">x_factor</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">y_factor</span><span class="p">,</span> <span class="n">x_factor</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">factor</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s2">&quot;The passed shape is not bigger than self.shape, &quot;</span>
                 <span class="o">+</span> <span class="s2">&quot;we will use a resized copy of self to fit the shape.&quot;</span>
             <span class="p">)</span>
+            <span class="n">factor</span> <span class="o">-=</span> <span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
             <span class="n">new_shape</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">factor</span><span class="p">),</span>
                 <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">factor</span><span class="p">),</span>
@@ -703,6 +706,52 @@
             <span class="n">callbacks</span><span class="p">,</span>
             <span class="n">vars_dic</span><span class="p">,</span>
         <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RadioButton"><a class="viewcode-back" href="../../index.html#np_gui.np_clickable_image.RadioButton">[docs]</a><span class="k">class</span> <span class="nc">RadioButton</span><span class="p">(</span><span class="n">ImageToggles</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A subclass for radio buttons.</span>
+
+<span class="sd">    It has a unique original method: the _init_ method extends the</span>
+<span class="sd">    superclass&#39; one.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RadioButton.__init__"><a class="viewcode-back" href="../../index.html#np_gui.np_clickable_image.RadioButton.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">radius</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">toggle_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;radio_toggle&quot;</span><span class="p">,</span>
+        <span class="n">checked</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiate RadioButton.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            radius (int): radius of the external circle of the button.</span>
+<span class="sd">            toggle_name (str, optional): vars_dic keyword for the button</span>
+<span class="sd">                status (checked or not). Defaults to &quot;radio_toggle&quot;.</span>
+<span class="sd">            checked (bool, optional): Initial state of the button.</span>
+<span class="sd">                Defaults to False. If False, the button starts unchecked.</span>
+<span class="sd">                Otherwise, it starts checked.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">external_circle</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
+            <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;uint8&quot;</span>
+        <span class="p">)</span>
+        <span class="n">internal_dot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">external_circle</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;bool&quot;</span><span class="p">)</span>
+
+        <span class="n">external_circle</span><span class="p">[</span>
+            <span class="n">skimage</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle_perimeter</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">internal_dot</span><span class="p">[</span>
+            <span class="n">skimage</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">disk</span><span class="p">((</span><span class="n">radius</span><span class="p">,</span> <span class="n">radius</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="p">)</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">external_circle</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">internal_dot</span><span class="p">],</span>
+            <span class="n">on_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+            <span class="n">off_color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+            <span class="n">toggles_name</span><span class="o">=</span><span class="n">toggle_name</span><span class="p">,</span>
+            <span class="n">default_toggle_value</span><span class="o">=</span><span class="n">checked</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
 
 
 <div class="viewcode-block" id="SliceDisplayer"><a class="viewcode-back" href="../../index.html#np_gui.np_clickable_image.SliceDisplayer">[docs]</a><span class="k">class</span> <span class="nc">SliceDisplayer</span><span class="p">(</span><span class="n">ClickableImage</span><span class="p">):</span>
