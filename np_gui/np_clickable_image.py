@@ -448,21 +448,22 @@ class ClickableImage:
 
     def resize(
         self,
-        shape: tuple[int, ...],
+        shape: tuple[int, int],
         anti_aliasing: bool = False,
         preserve_range: bool = False,
     ) -> ClickableImage:
         """Resize self to input shape.
 
         Args:
-            shape (tuple[int,...]): Desired shape for the output.
+            shape (tuple[int,int]): Desired 2d shape for the output.
             anti_aliasing (bool, optional): argument to be passed in
                 the underlying skimage.resize call. Defaults to False.
             preserve_range (bool, optional): argument to be passed in
                 the underlying skimage.resize call. Defaults to False.
 
         Returns:
-            ClickableImage: The resized version of self.
+            ClickableImage: The resized version of self, with the same 
+                number of channels as self.
         """
 
         def new_image_func(**kwargs):
@@ -474,7 +475,10 @@ class ClickableImage:
             )
 
         new_image = _CombinableFunc(new_image_func, self.image.defaults_dic)
-        new_shape = shape
+        if len(self.shape)==2:
+            new_shape = shape
+        else:
+            new_shape=shape+self.shape[2:]
         new_regions = [
             skimage.transform.resize(region, shape[:2])
             for region in self.regions
@@ -485,10 +489,8 @@ class ClickableImage:
         )
 
     def center_in_shape(
-        self,
-        shape: tuple[int, int],
-        frame_color=None
-    )->ClickableImage:
+        self, shape: tuple[int, int], frame_color=None
+    ) -> ClickableImage:
         """Return clickable of the given shape with self in the center.
 
         Args:
@@ -502,21 +504,22 @@ class ClickableImage:
 
         Returns:
             ClickableImage: A new clickable A with A.shape=shape,
-                self in the center and extra pixels color specified by 
+                self in the center and extra pixels color specified by
                 frame_color.
         """
         if frame_color is None:
-            frame_color=colors.main_color(self.get_image())
+            frame_color = colors.main_color(self.get_image())
         else:
             frame_color = colors.color_to_rgb(frame_color)
         y_factor = shape[0] / self.shape[0]
         x_factor = shape[1] / self.shape[1]
-        factor = round(min(y_factor, x_factor), 3) - 10 ** (-3)
+        factor = round(min(y_factor, x_factor), 3)
         if factor < 1:
             warnings.warn(
                 "The passed shape is not bigger than self.shape, "
                 + "we will use a resized copy of self to fit the shape."
             )
+            factor -= 10 ** (-3)
             new_shape = (
                 int(self.shape[0] * factor),
                 int(self.shape[0] * factor),
