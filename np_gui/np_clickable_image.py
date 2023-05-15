@@ -675,6 +675,52 @@ class ImageToggles(ClickableImage):
         )
 
 
+class RadioButton(ImageToggles):
+    """A subclass for radio buttons.
+
+    It has a unique original method: the _init_ method extends the
+    superclass' one.
+    """
+
+    def __init__(
+        self,
+        radius: int,
+        toggle_name: str = "radio_toggle",
+        checked: bool = False,
+    ):
+        """Instantiate RadioButton.
+
+        Args:
+            radius (int): radius of the external circle of the button.
+            toggle_name (str, optional): vars_dic keyword for the button
+                status (checked or not). Defaults to "radio_toggle".
+            checked (bool, optional): Initial state of the button.
+                Defaults to False. If False, the button starts unchecked.
+                Otherwise, it starts checked.
+        """
+        external_circle = 255 * np.ones(
+            (2 * radius + 1, 2 * radius + 1, 3), dtype="uint8"
+        )
+        internal_dot = np.zeros(external_circle.shape[:2], dtype="bool")
+
+        external_circle[
+            skimage.draw.circle_perimeter(radius, radius, radius)
+        ] = 0
+        internal_dot[
+            skimage.draw.disk((radius, radius), (2 * radius) // 3)
+        ] = 1
+
+        super().__init__(
+            external_circle,
+            [internal_dot],
+            on_color="black",
+            off_color="white",
+            toggles_name=toggle_name,
+            default_toggle_value=checked,
+        )
+
+
+
 class SliceDisplayer(ClickableImage):
     """This subclass is for clickable images that display a slice of text.
 
